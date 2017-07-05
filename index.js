@@ -110,14 +110,13 @@ function processQueue() {
         }
       }
     }
-
-    sendMail({
-      subject: subject,
-      text: text,
-      attachments: attachments
-    })
   }
-
+  sendMail({
+    subject: subject,
+    text: text,
+    attachments: attachments
+  })
+    
   //reset queue
   queue.length = 0
 }
