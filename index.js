@@ -35,7 +35,17 @@ function sendMail(opts) {
   if(!opts.subject || !opts.text) {
     throw new ReferenceError("No text or subject to be mailed")
   }
+  console.log(typeof config.mail.to);
+  console.log(typeof config.mail.to.length);
+  if(config.mail.to.length > 1){
+    config.mail.to.forEach(function(mailTo){
+      opts.to = mailTo;
+      doSendMail(opts);
+    })
+  }
 
+}
+function doSendMail(opts){
   var opts = {
     from: opts.from || config.mail.from,
     to: opts.to ? opts.to : config.mail.to,
@@ -44,13 +54,16 @@ function sendMail(opts) {
     attachments: opts.attachments || []
   }
 
-  transporter.sendMail(opts, function(err, info) {
-    if(err) {
-      console.error(err)
-    }
-
-    console.log('Mail sent', info)
-  })
+  console.log('##############################');
+console.log(new Date().toString());
+console.log('sending Mail to : ',opts.to);
+  // transporter.sendMail(opts, function(err, info) {
+  //   if(err) {
+  //     console.error(err)
+  //   }
+  //
+  //   console.log('Mail sent', info)
+  // })
 }
 
 /**
